@@ -9,7 +9,8 @@ using UnityEngine.SceneManagement;
 public class Snake : MonoBehaviour
 {
     Vector2 dir = Vector2.right;
-
+    public int TotalScore;
+    public Text scoreText;
     void Start()
     {
         InvokeRepeating("Move", 0.045f, 0.045f);   
@@ -17,6 +18,9 @@ public class Snake : MonoBehaviour
 
     void Update()
     {
+            //TotalScore = PlayerPrefs.GetInt("Score", 0);
+            scoreText.text = "Score: " + TotalScore.ToString();
+        
         if (Input.GetKey(KeyCode.RightArrow))
         {
             dir = Vector2.right;
@@ -63,11 +67,18 @@ public class Snake : MonoBehaviour
         {
             ate = true;
             Destroy(coll.gameObject);
+            TotalScore++;
+           
         }
         else if(coll.name.StartsWith("Border"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+        /*else if (coll.name.StartsWith("TailPrefab"))
+        {
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        }*/
     }
 
 }
